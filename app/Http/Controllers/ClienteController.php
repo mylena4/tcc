@@ -68,25 +68,19 @@ class ClienteController extends Controller
 
     }
 
-    public function editstatus($id){
-        $cliente = Cliente::find($id);
-
-        if($cliente->status == 0){
-            $cliente->status = 1;
+    
+    
+    public function search(Request $request, $find = null) {
+        $find = ($find == null) ? $request->find : $find;    
+        $clientes = Cliente::where('nome','like', $find.'%')->orWhere('email','like',$find.'%')->orWhere('telefone','like',$find.'%')->get();            
+        if($clientes->count() >= 1) {
+            return view('clientes.index', compact('clientes'));
         } else {
-            $cliente->status = 0;
-        }
-
-        if($cliente->save()) {
-            \Session::flash('message', 'Status alterado com sucesso!');
-            \Session::flash('alert-class', 'bg-success');
-            return back();
-        } else {
-            \Session::flash('message', 'Falha ao alterar status!');
+            $clientes = Cliente::all();
+            \Session::flash('message', 'Nenhum cliente econtrado!');
             \Session::flash('alert-class', 'bg-danger');
-            return back();
+            return view('clientes.index', compact('clientes'));
         }
-
     }
 
     public function delete(Request $request, $id) {

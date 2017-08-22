@@ -66,6 +66,9 @@ Route::post('/salvar/clie', 'ClienteController@store')->name('clientes-salvar');
 Route::get('/editar/clie/{id}', 'ClienteController@editview') ;
 Route::post('/editar/clie/{id}', 'ClienteController@edit');
 Route::get('/deletar/clie/{id}', 'ClienteController@delete');
+Route::post('/clientes/{find}', 'ClienteController@search');
+Route::get('/clientes/{find}', 'ClienteController@search');
+Route::get('/consulta/clie', 'ClienteController@search');
 
 //Rotas Produtos
 Route::get('/produtos', 'ProdutoController@index');

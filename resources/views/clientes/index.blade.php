@@ -3,13 +3,15 @@
 @section('content')
     <div class="panel-heading"><h2>Clientes</h2></div>
     <div class="panel-body">
-        {{--<form method="get" class="form-group" action="/consultaclie">--}}
-        {{--<div class="col-md-4">--}}
-        {{--<input name="find" class="form-control" placeholder="Buscar cliente...">--}}
-        {{--</div>--}}
-        {{--<input class="btn btn-primary" type="submit" value="Buscar">--}}
-        {{--</form>--}}
-
+        <form method="get" class="form-group" action="/consulta/clie">
+        <div class="col-md-4">
+        <input name="find" class="form-control" placeholder="Buscar cliente...">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Buscar">
+        </form>
+        
+        
+        
         <table class="table">
             <thead>
             <th>ID</th>
