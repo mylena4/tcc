@@ -72,7 +72,7 @@ class ClienteController extends Controller
     
     public function search(Request $request, $find = null) {
         $find = ($find == null) ? $request->find : $find;    
-        $clientes = Cliente::where('nome','like', $find.'%')->orWhere('email','like',$find.'%')->orWhere('telefone','like',$find.'%')->get();            
+        $clientes = Cliente::where('nome','like','%'.$find.'%')->orWhere('email','like',$find.'%')->orWhere('telefone','like',$find.'%')->get();            
         if($clientes->count() >= 1) {
             return view('clientes.index', compact('clientes'));
         } else {

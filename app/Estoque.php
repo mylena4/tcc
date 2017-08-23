@@ -16,7 +16,5 @@ class Estoque extends Model
         return $this->belongsTo(Fornecedor::class, 'fornecedor_id');
     }
     
-    public function produtos() {
-        return $this->belongsToMany(Produto::class, 'produto_material');
-    }
+    
 }

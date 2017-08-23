@@ -5,7 +5,7 @@
     <div class="panel-body">
         <form method="get" class="form-group" action="/consulta/clie">
         <div class="col-md-4">
-        <input name="find" class="form-control" placeholder="Buscar cliente...">
+        <input name="find" class="form-control" placeholder="Buscar cliente por nome, telefone ou email...">
         </div>
         <input class="btn btn-primary" type="submit" value="Buscar">
         </form>

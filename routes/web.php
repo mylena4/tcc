@@ -34,6 +34,7 @@ Route::post('/salvar', 'UserController@store')->name('usuarios-salvar');
 Route::get('/editar/{id}', 'UserController@editview') ;
 Route::post('/editar/{id}', 'UserController@edit');
 Route::get('/status/{id}', 'UserController@editstatus');
+Route::get('/consulta/', 'UserController@search');
 
 //Rotas Fornecedores
 Route::get('/fornecedores','FornecedoresController@index') ;
@@ -55,7 +56,7 @@ Route::post('/salvar/mate', 'EstoqueController@store')->name("material-salvar");
 Route::get('/editar/mate/{id}', 'EstoqueController@editview') ;
 Route::post('/editar/mate/{id}', 'EstoqueController@edit');
 Route::get('/deletar/mate/{id}', 'EstoqueController@delete');
-Route::get('/consulta/mate', 'FornecedorController@search');
+Route::get('/consulta/mate', 'EstoqueController@search');
 
 //Rotas Clientes
 Route::get('/clientes', 'ClienteController@index');
@@ -72,10 +73,11 @@ Route::get('/consulta/clie', 'ClienteController@search');
 
 //Rotas Produtos
 Route::get('/produtos', 'ProdutoController@index');
-Route::get('/cadastro/prod', function(){
-    return view('produtos.create-edit');
-})->name('cadastroprod');
+Route::get('/cadastro/prod','ProdutoController@createview')->name('cadastroprod');
 Route::post('/salvar/prod', 'ProdutoController@store')->name('produtos-salvar');
 Route::get('/editar/prod/{id}', 'ProdutoController@editview') ;
 Route::post('/editar/prod/{id}', 'ProdutoController@edit');
 Route::get('/deletar/prod/{id}', 'ProdutoController@delete');
+Route::get('/consulta/prod', 'ProdutoController@search');
+
+

@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Produto;
 use App\Estoque;
+use App\Produto_Material;
 
-class ProdutoController extends Controller
-{
+class ProdutoController extends Controller {
     public function __construct() {
         $this->middleware('auth');
     }
@@ -18,10 +18,36 @@ class ProdutoController extends Controller
         $materiais = Estoque::all();
         return view('produtos.index', compact('produtos', 'materiais'));
     }
+    
+     public function createview() {
+        $materiais = Estoque::all();
+        return view('produtos.create-edit', compact('materiais'));
+    }
+    
+    public function savemateriais(Request $request){
+        
+        foreach($request->materiais as $material){
+            
+            //$material = $request->materiais->id;
+            dd($material);
+            
+//            Produto_Material::saveMany([
+//                'mate_id' => $material->id,
+//                'prod_id' =>  ,
+//            ]);
+            
+            
+            
+        }
+        return true;
+        
+    }
 
     public function store(Request $request){
 
 
+        //ProdutoController::savemateriais($request);
+        
         $this->validate($request, [
             'nome' => 'required',
             'descricao' => 'required|min:10',
@@ -33,7 +59,18 @@ class ProdutoController extends Controller
             'descricao' => $request->descricao,
             'preco' => $request->preco,
         ]);
-
+            
+        foreach($request->materiais as $material){
+            
+            Produto_Material::saveMany([
+                'mate_id' => $material->id,
+                'prod_id' => ,
+            ]);
+            
+            
+            
+        }
+        
         \Session::flash('message', 'Produto cadastrado com sucesso!');
         \Session::flash('alert-class', 'bg-success');
         return back();
