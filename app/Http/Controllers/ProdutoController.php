@@ -28,25 +28,17 @@ class ProdutoController extends Controller {
         
         foreach($request->materiais as $material){
             
-            //$material = $request->materiais->id;
-            dd($material);
-            
-//            Produto_Material::saveMany([
-//                'mate_id' => $material->id,
-//                'prod_id' =>  ,
-//            ]);
-            
-            
+            Produto_Material::create([
+                'mate_id' => $material,
+                'prod_id' => Produto::where('nome', $request->nome)->get()->id,
+            ]);
             
         }
-        return true;
-        
+ 
     }
 
     public function store(Request $request){
 
-
-        //ProdutoController::savemateriais($request);
         
         $this->validate($request, [
             'nome' => 'required',
@@ -60,16 +52,7 @@ class ProdutoController extends Controller {
             'preco' => $request->preco,
         ]);
             
-        foreach($request->materiais as $material){
-            
-            Produto_Material::saveMany([
-                'mate_id' => $material->id,
-                'prod_id' => ,
-            ]);
-            
-            
-            
-        }
+        ProdutoController::savemateriais($request);
         
         \Session::flash('message', 'Produto cadastrado com sucesso!');
         \Session::flash('alert-class', 'bg-success');
@@ -82,11 +65,13 @@ class ProdutoController extends Controller {
 
     public function editview($id) {
         $produto = Produto::find($id);
-        return view('produtos.create-edit', compact('produto'));
+        $materiais = Estoque::all();
+        return view('produtos.create-edit', compact('materiais', 'produto'));
     }
 
     public function edit(Request $request, $id){
         $produto = Produto::find($id);
+        
         $produto->nome = $request->nome;
         $produto->telefone = $request->telefone;
         $produto->endereco = $request->endereco;
