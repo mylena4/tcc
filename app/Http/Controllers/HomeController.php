@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $result = DB::table("materiais")->select(DB::raw("sum(quantidade) as total"))->get();
+        $result = DB::table("produtos")->select(DB::raw("count(nome) as total"))->get();
         $total = $result[0]->total;
 
         return view('home', compact('total'));

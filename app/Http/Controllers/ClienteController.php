@@ -33,7 +33,8 @@ class ClienteController extends Controller
             'endereco' => $request->endereco,
             'email' => $request->email,
         ]);
-
+        
+        
         \Session::flash('message', 'Cliente cadastrado com sucesso!');
         \Session::flash('alert-class', 'bg-success');
         return back();

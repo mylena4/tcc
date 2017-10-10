@@ -1,15 +1,24 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/excel', function() {
+   Excel::create('Laravel Excel', function($excel) {
+
+    $excel->sheet('Excel sheet', function($sheet) {
+
+        $sheet->setOrientation('landscape');
+        $sheet->row(1, array(
+             'test1', 'test2'
+        ));
+
+        // Manipulate 2nd row
+        $sheet->row(2, array(
+            'test3', 'test4'
+        ));
+
+    });
+
+   })->export('xls'); 
+});
 
 //Rotas Auth
 Route::get('/', function(){
@@ -79,5 +88,15 @@ Route::get('/editar/prod/{id}', 'ProdutoController@editview') ;
 Route::post('/editar/prod/{id}', 'ProdutoController@edit');
 Route::get('/deletar/prod/{id}', 'ProdutoController@delete');
 Route::get('/consulta/prod', 'ProdutoController@search');
+Route::get('/detalhes/prod/{id}', 'ProdutoController@details');
 
+
+//Rotas Pedidos
+Route::get('/pedidos', 'PedidoController@index');
+Route::get('/cadastro/pedi','PedidoController@createview')->name('cadastropedi');
+Route::post('/salvar/pedi', 'PedidoController@store')->name('pedidos-salvar');
+Route::get('/editar/pedi/{id}', 'PedidoController@editview') ;
+Route::post('/editar/pedi/{id}', 'PedidoController@edit');
+Route::get('/deletar/pedi/{id}', 'PedidoController@delete');
+Route::get('/consulta/pedi', 'PedidoController@search');
 

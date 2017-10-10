@@ -26,18 +26,20 @@ class EstoqueController extends Controller
         return view('materiais.create-edit', compact('fornecedores'));
     }
 
-    public function store(Request $request)
-    {
-
-
-        Estoque::create([
-            'fornecedor_id' =>  (int) $request->fornecedor,
-            'nome' => $request->nome,
-            'descricao' => $request->descricao,
-            'preco' => $request->preco,
-            'quantidade' => $request->quantidade,
-
-        ]);
+    public function store(Request $request) {
+        try {
+            Estoque::create([
+                'nome' => $request->nome,
+                'descricao' => $request->descricao,
+                'preco' => $request->preco,
+                'quantidade' => $request->quantidade,
+                'forn_id' =>  (int) $request->fornecedor,
+            ]);
+        } catch(Exception $e) {
+            \Session::flash('message', 'Material não cadastrado');
+            \Session::flash('alert-class', 'bg-danger');
+            return view('materiais.create-edit');
+        }
 
         \Session::flash('message', 'Material cadastrado com sucesso!');
         \Session::flash('alert-class', 'bg-success');
@@ -67,7 +69,7 @@ class EstoqueController extends Controller
 
         if($request->fornecedor == -1 || !isset($request->fornecedor))
             $materiais = Estoque::where('nome','like', $request->find.'%')->get();
-        else $materiais = Estoque::where('fornecedorid','=', $request->fornecedor)->get();
+        else $materiais = Estoque::where('forn_id','=', $request->fornecedor)->get();
 
         $fornecedores = Fornecedor::all();
         if($materiais->count() >= 1) {

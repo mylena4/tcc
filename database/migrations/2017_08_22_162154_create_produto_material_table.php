@@ -14,12 +14,13 @@ class CreateProdutoMaterialTable extends Migration
     public function up()
     {
         Schema::create('produto_material', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('prod_id')->unsigned();
             $table->integer('mate_id')->unsigned();
             $table->foreign('prod_id')->references('id')->on('produtos')->onDelete('cascade');
             $table->foreign('mate_id')->references('id')->on('materiais')->onDelete('cascade');
+            $table->primary(['prod_id','mate_id']);
             $table->timestamps();
+            
         });
     }
 

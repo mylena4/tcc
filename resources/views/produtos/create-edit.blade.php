@@ -8,7 +8,7 @@
             <div class="panel-heading">{{ Request::is('cadastro/prod') ? 'Cadastrar ' : 'Editar ' }} Produto</div>
             <div class="panel-body">
 
-                <form class="form-horizontal" role="form" method="POST" action="@if(Request::is('cadastro/prod')) /salvar/prod @else /editar/pro/{{$produto->id}} @endif">
+                <form class="form-horizontal" role="form" method="POST" action="@if(Request::is('cadastro/prod')) /salvar/prod @else /editar/prod/{{$produto->id}} @endif">
                     {{ csrf_field() }}
 
                     <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
@@ -53,13 +53,23 @@
                             @endif
                         </div>
                     </div>
-
+                     
                     <div class="form-group">
                         <label class="col-md-4 control-label">Materiais: </label> <br>
                         <div class="col-md-8">
                             @foreach($materiais as $material)
-                            <input type="checkbox" name="materiais[]" value="{{ $material->id }}">
+                            <input type="checkbox" name="materiais[]" value="{{ $material->id }}" 
+                                    @if(isset($prod_mate)) 
+                                        @foreach($prod_mate as $mate) 
+                                            @if($mate->id == $material->id) 
+                                                checked 
+                                            @endif 
+                                        @endforeach 
+                                    @endif >
+                                   
+                            
                             {{ $material->nome }}<br>
+                            
                             @endforeach
 
                         </div>

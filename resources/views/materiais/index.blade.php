@@ -15,6 +15,8 @@
             <th>Preço Unitário</th>
             </thead>
             <tbody>
+                
+                
             @foreach($materiais as $material)
                 <tr>
                     <td>{{ $material->id }}</td>

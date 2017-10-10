@@ -24,6 +24,7 @@
                     <td>{{ $produto->nome }}</td>
                     <td>{{ $produto->descricao }}</td>
                     <td>{{ $produto->preco }}</td>
+                    <td><a href="/detalhes/prod/{{$produto->id}}"class="btn btn-warning pull-right">Materiais</a></td>
                     <td><a href="/editar/prod/{{$produto->id}}"class="btn btn-primary pull-right">Editar</a></td>
                     <td><a id="deleta_{{$produto->id}}" href="/deletar/prod/{{$produto->id}}" class="btn btn-danger">Deletar</a></td>
                 </tr>
