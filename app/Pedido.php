@@ -8,7 +8,7 @@ class Pedido extends Model
 {
     protected $table = "pedidos";
 
-    protected $fillable = ['clie_id', 'data_entr', 'val_tot', 'descricao'];
+    protected $fillable = ['clie_id', 'val_tot', 'obs'];
     
     public function cliente()
     {

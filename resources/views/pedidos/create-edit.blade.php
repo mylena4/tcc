@@ -2,6 +2,44 @@
 
 @section('content')
 
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script>
+    $(function () {
+        var i = 0;
+        //var scntDiv = $('#dynamicDiv');
+        $(document).on('click', '#addInput', function () {
+            var div = document.querySelector("#dynamicDiv");
+            //console.log("tamo aqui");
+            //valor = `<input type="text" name="test" value="tentandoaqui"/>`;
+            
+            //++i;
+            valor = '<p>'+
+                          '<label class="col-md-4 control-label"></label>'+
+                            '<select name="produto[]" class="form-control" >'+
+                               '<option>Selecione um Produto</option>'+
+                                '@foreach($produtos as $produto)'+
+                                    '<option value="{{ $produto->id }}">'+
+                                        '{{ $produto->nome }}'+
+                                    '</option>'+
+                                '@endforeach'+
+                            '</select>'+
+                            '<input type="number" class="form-control" step=0.1  name="qtd[]" placeholder="Quantidade" size="20" /> '+
+                            '<a class="btn btn-danger" href="javascript:void(0)" id="remInput">'+	
+                                'Remover'+
+                            '</a>'+
+                            '</p>';
+            div.innerHTML = div.innerHTML + valor;        
+            //scntDiv = scntDiv.innerHTML + novaDiv;
+            return false;
+			    });
+			    $(document).on('click', '#remInput', function () {
+		            $(this).parents('p').remove();
+			        return false;
+			    });
+			});
+</script>
+
+
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -12,10 +50,10 @@
                     {{ csrf_field() }}
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Cliente: </label>
-                            <div class="col-md-8">
+                        <label class="col-md-4 control-label">Cliente: </label>
+                            <div class="col-md-6">
                                 <select name="cliente" class="form-control">
-                                    <option>Selecione um cliente</option>
+                                    <option value="Selecione">Selecione um cliente</option>
                                     @foreach($clientes as $cliente)
                                     <option value="{{ $cliente->id }}">
                                         {{ $cliente->nome }}
@@ -25,27 +63,38 @@
                             </div>
                     </div>
                   
-                    
-                    
-                <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
-                    <label for="descricao" class="col-md-4 control-label">Descrição</label>
 
-                    <div class="col-md-6">
-                        <input id="descricao" type="text" class="form-control" name="descricao" value="{{ isset($produto) ? $produto->descricao : ''}}" placeholder="" required autofocus>
-
-                        @if ($errors->has('descricao'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('descricao') }}</strong>
-                        </span>
-                        @endif
+                    
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Produtos: </label>
+			
+			
+			<div class="form-inline">			
+			        <select name="produto[]" class="col-md-6 form-control" >
+                                    <option>Selecione um Produto</option>
+                                    @foreach($produtos as $produto)
+                                    <option value="{{ $produto->id }}">
+                                        {{ $produto->nome }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                    <input type="number" class="form-control " step=1 id="inputeste" name="qtd[]" placeholder="Quantidade" /> 
+                            
+                            <a class="btn btn-primary" href="javascript:void(0)" id="addInput">
+				Adicionar 
+			</a>
+                                    <div  id="dynamicDiv">
+                                        
+                                    </div>
+                        </div>                        
                     </div>
-                </div>
+
 
                 <div class="form-group{{ $errors->has('preco') ? ' has-error' : '' }}">
-                    <label for="preco" class="col-md-4 control-label">Preço Unitário: </label>
+                    <label for="preco" class="col-md-4 control-label">Valor Total: </label>
 
                     <div class="col-md-6">
-                        <input id="descricao" type="number" step="0.1" class="form-control" name="preco" value="{{ isset($produto) ? round($produto->preco,1): ''}}" placeholder="" required autofocus>
+                        <input id="descricao" type="number" step="0.1" class="form-control" name="preco" placeholder="" > 
 
                         @if ($errors->has('preco'))
                         <span class="help-block">
@@ -54,19 +103,20 @@
                         @endif
                     </div>
                 </div>
+                    
+                <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
+                    <label for="descricao" class="col-md-4 control-label">Observação</label>
 
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Produtos: </label> <br>
-                    <div class="col-md-8">
-                        @foreach($produtos as $produto)
-                        <input type="checkbox" name="produtos[]" value="{{ $produto->id }}">
-                        {{ $produto->nome }}<br>
-                        @endforeach
+                    <div class="col-md-6">
+                        <textarea id="descricao"  class="form-control" name="descricao" value="{{ isset($produto) ? $produto->descricao : ''}}" placeholder="" ></textarea>
 
+                        @if ($errors->has('descricao'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('descricao') }}</strong>
+                        </span>
+                        @endif
                     </div>
                 </div>
-
-
 
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-4">
@@ -83,5 +133,7 @@
     </div>
 </div>
 </div>
+
+
 
 @endsection

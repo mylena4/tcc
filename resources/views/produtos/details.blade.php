@@ -10,14 +10,14 @@
             <thead>
             <th>Nome</th>
             <th>Descrição</th>
-            <th>Quantidade</th>
+            <th>Quantidade Necessária</th>
             </thead>
             <tbody>
             @foreach($materiais as $material)
                 <tr>
                     <td>{{ $material->nome }}</td>
                     <td>{{ $material->descricao }}</td>
-                    <th>{{ $material->quantidade }}</th>
+                    <td>{{ $material->qtd_mate }}</td>
                 </tr>
             @endforeach
             </tbody>

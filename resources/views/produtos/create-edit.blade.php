@@ -2,6 +2,44 @@
 
 @section('content')
 
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script>
+    $(function () {
+        var i = 0;
+        //var scntDiv = $('#dynamicDiv');
+        $(document).on('click', '#addInput', function () {
+            var div = document.querySelector("#dynamicDiv");
+            //console.log("tamo aqui");
+            //valor = `<input type="text" name="test" value="tentandoaqui"/>`;
+            
+            //++i;
+            valor = '<p>'+
+                          '<label class="col-md-4 control-label"></label>'+
+                            '<select name="materiais[]" class="form-control" >'+
+                               '<option>Selecione um Material</option>'+
+                                '@foreach($materiais as $material)'+
+                                    '<option value="{{ $material->id }}">'+
+                                        '{{ $material->nome }}'+
+                                    '</option>'+
+                                '@endforeach'+
+                            '</select>'+
+                            '<input type="number" class="form-control" step=0.1  name="qtd[]" placeholder="Quantidade" size="20" /> '+
+                            '<a class="btn btn-danger" href="javascript:void(0)" id="remInput">'+	
+                                'Remover'+
+                            '</a>'+
+                            '</p>';
+            div.innerHTML = div.innerHTML + valor;        
+            //scntDiv = scntDiv.innerHTML + novaDiv;
+            return false;
+			    });
+			    $(document).on('click', '#remInput', function () {
+		            $(this).parents('p').remove();
+			        return false;
+			    });
+			});
+			</script>
+
+
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -56,23 +94,25 @@
                      
                     <div class="form-group">
                         <label class="col-md-4 control-label">Materiais: </label> <br>
-                        <div class="col-md-8">
-                            @foreach($materiais as $material)
-                            <input type="checkbox" name="materiais[]" value="{{ $material->id }}" 
-                                    @if(isset($prod_mate)) 
-                                        @foreach($prod_mate as $mate) 
-                                            @if($mate->id == $material->id) 
-                                                checked 
-                                            @endif 
-                                        @endforeach 
-                                    @endif >
-                                   
+                        
+                        <div class="form-inline">			
+			        <select name="materiais[]" class="col-md-6 form-control" >
+                                    <option>Selecione um Material</option>
+                                    @foreach($materiais as $material)
+                                    <option value="{{ $material->id }}">
+                                        {{ $material->nome }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                    <input type="number" class="form-control " step=1 id="inputeste" name="qtd[]" placeholder="Quantidade" /> 
                             
-                            {{ $material->nome }}<br>
-                            
-                            @endforeach
-
-                        </div>
+                            <a class="btn btn-primary" href="javascript:void(0)" id="addInput">
+				Adicionar 
+			</a>
+                                    <div  id="dynamicDiv">
+                                        
+                                    </div>
+                        </div> 
                     </div>
 
 

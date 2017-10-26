@@ -16,11 +16,11 @@ class CreateProdutoMaterialTable extends Migration
         Schema::create('produto_material', function (Blueprint $table) {
             $table->integer('prod_id')->unsigned();
             $table->integer('mate_id')->unsigned();
+            $table->integer('qtd_mate')->unsigned();
             $table->foreign('prod_id')->references('id')->on('produtos')->onDelete('cascade');
             $table->foreign('mate_id')->references('id')->on('materiais')->onDelete('cascade');
             $table->primary(['prod_id','mate_id']);
             $table->timestamps();
-            
         });
     }
 

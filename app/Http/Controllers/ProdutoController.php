@@ -23,14 +23,13 @@ class ProdutoController extends Controller {
         return view('produtos.create-edit', compact('materiais'));
     }
     
-    public function savemateriais(Request $request){
-        $produto =  DB::table('produtos')->where('nome', '=', $request->nome)->first();
+    public function savemateriais(Request $request, $prod_id){        
         
-        
-        foreach($request->materiais as $material){
+        foreach($request->materiais as $key => $material){
             Produto_Material::create([
                 'mate_id' => $material,
-                'prod_id' => $produto->id,
+                'prod_id' => $prod_id,
+                'qtd_mate' => $request->qtd[$key],
             ]);   
         }
     }
@@ -42,14 +41,14 @@ class ProdutoController extends Controller {
             'descricao' => 'required|min:10',
             'preco' => 'required',
         ]);
-
-        Produto::create([
+                 
+        $prod_id = DB::table('produtos')->insertGetId([
             'nome' => $request->nome,
             'descricao' => $request->descricao,
             'preco' => $request->preco,
         ]);
-            
-        ProdutoController::savemateriais($request);
+        
+        ProdutoController::savemateriais($request, $prod_id);
         
         \Session::flash('message', 'Produto cadastrado com sucesso!');
         \Session::flash('alert-class', 'bg-success');
@@ -112,7 +111,7 @@ class ProdutoController extends Controller {
                 ->join('produtos', 'produto_material.prod_id', '=', 'produtos.id')
                 ->where('produtos.id', '=', $id)
                 ->join('materiais', 'produto_material.mate_id', '=','materiais.id')
-                ->select('produtos.nome', 'materiais.nome', 'materiais.descricao', 'materiais.quantidade')
+                ->select('produtos.nome', 'materiais.nome', 'materiais.descricao', 'produto_material.qtd_mate')
                 ->get();
         $produto = Produto::find($id);  
         

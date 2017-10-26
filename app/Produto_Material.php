@@ -8,7 +8,7 @@ class Produto_Material extends Model
 {
     protected $table = "produto_material";
 
-    protected $fillable = ['prod_id', 'mate_id'];
+    protected $fillable = ['prod_id', 'mate_id','qtd_mate'];
 
     public function produto()
     {
