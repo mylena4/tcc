@@ -6,13 +6,9 @@
 <script>
     $(function () {
         var i = 0;
-        //var scntDiv = $('#dynamicDiv');
         $(document).on('click', '#addInput', function () {
             var div = document.querySelector("#dynamicDiv");
-            //console.log("tamo aqui");
-            //valor = `<input type="text" name="test" value="tentandoaqui"/>`;
             
-            //++i;
             valor = '<p>'+
                           '<label class="col-md-4 control-label"></label>'+
                             '<select name="materiais[]" class="form-control" >'+

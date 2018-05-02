@@ -58,7 +58,6 @@ class ProdutoController extends Controller {
 
     public function editmateriais(Request $request, $id){
         
-        
         foreach($request->materiais as $material){
             $material = Estoque::where('id', $material)->first();
             $material->produto()->sync($id);  
@@ -94,10 +93,10 @@ class ProdutoController extends Controller {
         ProdutoController::editmateriais($request, $id);
         
         if($produto->save()) {
-            $request->session()->flash('message', 'Produto alterado com sucesso');
+            $request->session()->flash('message', 'Produto alterado com sucesso!');
             $request->session()->flash('alert-class', 'bg-success');
         } else {
-            $request->session()->flash('message', 'Falha ao alterar produto!');
+            $request->session()->flash('message', 'Falha ao alterar produto.');
             $request->session()->flash('alert-class', 'bg-danger');
         }
 
@@ -129,7 +128,6 @@ class ProdutoController extends Controller {
     public function delete(Request $request, $id) {
         $produto = Produto::find($id);
         $produto->delete();
-
 
             \Session::flash('message', 'Produto deletado com sucesso!');
             \Session::flash('alert-class', 'bg-success');

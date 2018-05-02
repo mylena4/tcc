@@ -4,7 +4,13 @@
     <div class="panel-heading"><h2>Estoque</h2></div>
     <div class="panel-body">
 
-
+        <form method="get" class="form-group pull-right row justify-content-end" action="/consulta/mate">
+        <div class="col-md-4">
+        <input name="find" class="form-control" placeholder="Buscar material por nome ou descrição...">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Buscar">
+        </form>
+        
         <table class="table">
             <thead>
             <th>ID</th>

@@ -23,7 +23,8 @@
                                     '</option>'+
                                 '@endforeach'+
                             '</select>'+
-                            '<input type="number" class="form-control" step=0.1  name="qtd[]" placeholder="Quantidade" size="20" /> '+
+                            '<input type="number" class="form-control" step=1  name="qtd[]" placeholder="Quantidade" size="0" /> '+
+                            '<input type="text" class="form-control"  name="desc[]" placeholder="Descrição" size="10" /> '+
                             '<a class="btn btn-danger" href="javascript:void(0)" id="remInput">'+	
                                 'Remover'+
                             '</a>'+
@@ -78,8 +79,8 @@
                                     </option>
                                     @endforeach
                                 </select>
-                                    <input type="number" class="form-control " step=1 id="inputeste" name="qtd[]" placeholder="Quantidade" /> 
-                            
+                                    <input type="number" class="form-control " step=1 id="inputeste" name="qtd[]" size="10" placeholder="Quantidade" /> 
+                                    <input type="text" class="form-control"  name="desc[]" placeholder="Descrição" size="10" /> 
                             <a class="btn btn-primary" href="javascript:void(0)" id="addInput">
 				Adicionar 
 			</a>
@@ -104,6 +105,49 @@
                     </div>
                 </div>
                     
+                
+                    
+                <div class="form-group{{ $errors->has('data_ini') ? ' has-error' : '' }}">
+                    <label for="data_ini" class="col-md-4 control-label">Data de Início: </label>
+
+                    <div class="col-md-6">
+                        <input id="data_ini" type="date" class="form-control" name="data_ini" placeholder="" > 
+
+                        @if ($errors->has('data_ini'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('data_ini') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>
+                    
+                <div class="form-group{{ $errors->has('data_fim') ? ' has-error' : '' }}">
+                    <label for="data_fim" class="col-md-4 control-label">Data de entrega: </label>
+
+                    <div class="col-md-6">
+                        <input id="data_fim" type="date"  class="form-control" name="data_fim" placeholder="" > 
+
+                        @if ($errors->has('data_fim'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('data_fim') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="status" class="col-md-4 control-label">Status</label>
+
+                    <div class="col-md-6">
+                        <select name="status" class="form-control" required>
+                            <option value="0">Selecione um status</option>
+                            <option value="1" @if(isset($pedido) && $pedido->status == 1 ) selected="selected" @endif> A iniciar </option>
+                            <option value="2" @if(isset($pedido) && $pedido->status == 2 ) selected="selected" @endif> Em andamento </option>
+                            <option value="3" @if(isset($pedido) && $pedido->status == 3 ) selected="selected" @endif> Concluído </option>
+                        </select>
+                    </div>
+                </div>    
+                 
                 <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
                     <label for="descricao" class="col-md-4 control-label">Observação</label>
 
@@ -116,8 +160,8 @@
                         </span>
                         @endif
                     </div>
-                </div>
-
+                </div>    
+                    
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-4">
                         <button type="submit" class="btn btn-primary" >

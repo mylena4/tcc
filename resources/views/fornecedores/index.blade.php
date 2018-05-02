@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="panel-heading"><h2>Fornecedores</h2></div>
-    <div class="panel-body">
-        {{--<form method="get" class="form-group" action="/consultaforn">--}}
-            {{--<div class="col-md-4">--}}
-                {{--<input name="find" class="form-control" placeholder="Buscar fornecedor...">--}}
-            {{--</div>--}}
-            {{--<input class="btn btn-primary" type="submit" value="Buscar">--}}
-        {{--</form>--}}
+<div class="panel-heading"><h2>Fornecedores</h2></div>
+    
+        <form method="get" class="form-group pull-right row justify-content-end" action="/consulta/forn">
+            <div class="col-md-4" id="teste">
+            <input name="find" class="form-control" placeholder="Buscar fornecedor por nome, CNPJ ou telefone...">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Buscar">
+        </form>
 
         <table class="table">
             <thead>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Endereço</th>
-            <th>CNPJ</th>
-            <th>Telefone</th>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Endereço</th>
+                <th>CNPJ</th>
+                <th>Telefone</th>
             </thead>
             <tbody>
             @foreach($fornecedores as $fornecedor)

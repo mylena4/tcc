@@ -78,7 +78,7 @@ class ClienteController extends Controller
             return view('clientes.index', compact('clientes'));
         } else {
             $clientes = Cliente::all();
-            \Session::flash('message', 'Nenhum cliente econtrado!');
+            \Session::flash('message', 'Nenhum cliente encontrado!');
             \Session::flash('alert-class', 'bg-danger');
             return view('clientes.index', compact('clientes'));
         }

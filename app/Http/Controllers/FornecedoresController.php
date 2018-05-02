@@ -7,8 +7,7 @@ use App\Fornecedor;
 
 class FornecedoresController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
 
@@ -51,6 +50,19 @@ class FornecedoresController extends Controller
         }
 
     }
+    
+    public function search(Request $request, $find = null) {
+        $find = ($find == null) ? $request->find : $find;    
+        $fornecedores = Fornecedor::where('nome','like','%'.$find.'%')->orWhere('cnpj','like',$find.'%')->orWhere('telefone','like',$find.'%')->get();            
+        if($fornecedores->count() >= 1) {
+            return view('fornecedores.index', compact('fornecedores'));
+        } else {
+            $clientes = Fornecedor::all();
+            \Session::flash('message', 'Nenhum fornecedor encontrado!');
+            \Session::flash('alert-class', 'bg-danger');
+            return view('fornecedores.index', compact('fornecedores'));
+        }
+    }
 
     public function editview($id) {
         $fornecedor = Fornecedor::find($id);
@@ -68,13 +80,7 @@ class FornecedoresController extends Controller
         return back();
     }
 
-    public function search(Request $request, $find = null) {
-        $find = ($find == null) ? $request->find : $find;
-        $fornecedores = Fornecedor::where('nome','like', $find.'%')->orWhere('cnpj',$find)->get();
-        if($fornecedores->count() >= 1) {
-            return view('fornecedores.index', compact('fornecedores'));
-        }
-    }
+
 
 
 

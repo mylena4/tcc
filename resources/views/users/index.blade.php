@@ -4,6 +4,15 @@
     <div class="panel-heading"><h2>Usuários</h2></div>
     <div class="panel-body">
 
+        
+        <form method="get" class="form-group pull-right row justify-content-end" action="/consulta">
+        <div class="col-md-4">
+        <input name="find" class="form-control" placeholder="Buscar usuario por nome ou email...">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Buscar">
+        </form>
+        
+        
 
         <table class="table">
             <thead>

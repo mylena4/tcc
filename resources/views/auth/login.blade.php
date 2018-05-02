@@ -76,18 +76,6 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-8">
-                                <div class="checkbox">
-                                    <label>
-                                        <div class="center-block">
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Lembrar informações
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">
                                     Entrar

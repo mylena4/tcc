@@ -3,13 +3,16 @@
 @section('content')
     <div class="panel-heading"><h2>Clientes</h2></div>
     <div class="panel-body">
-        <form method="get" class="form-group" action="/consulta/clie">
-        <div class="col-md-4">
+        
+        <div class="col-md-12 pull-right row justify-content-end">				
+        <form method="get" class="form-inline" action="/consulta/clie">
         <input name="find" class="form-control" placeholder="Buscar cliente por nome, telefone ou email...">
-        </div>
         <input class="btn btn-primary" type="submit" value="Buscar">
         </form>
-        
+                                        
+                                
+        </div>
+                                
         
         
         <table class="table">

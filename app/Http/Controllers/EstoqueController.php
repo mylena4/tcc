@@ -65,15 +65,16 @@ class EstoqueController extends Controller
         return view('materiais.create-edit', compact('fornecedores', 'material'));
     }
 
-    public function search(Request $request) {
-
-        if($request->fornecedor == -1 || !isset($request->fornecedor))
-            $materiais = Estoque::where('nome','like', $request->find.'%')->get();
-        else $materiais = Estoque::where('forn_id','=', $request->fornecedor)->get();
-
-        $fornecedores = Fornecedor::all();
+    public function search(Request $request,  $find = null) {
+        $find = ($find == null) ? $request->find : $find;    
+        $materiais = Estoque::where('nome','like','%'.$find.'%')->orWhere('descricao','like',$find.'%')->get();            
         if($materiais->count() >= 1) {
-            return view('materiais.index', compact('materiais', 'fornecedores'));
+            return view('materiais.index', compact('materiais'));
+        } else {
+            $clientes = Estoque::all();
+            \Session::flash('message', 'Nenhum material encontrado!');
+            \Session::flash('alert-class', 'bg-danger');
+            return view('materiais.index', compact('materiais'));
         }
     }
 
@@ -93,4 +94,6 @@ class EstoqueController extends Controller
 
         return back();
     }
+    
+
 }

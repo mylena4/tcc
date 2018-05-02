@@ -8,7 +8,7 @@ class Ordem_Pedido extends Model
 {
     protected $table = "ordem_pedido";
 
-    protected $fillable = ['pedi_id','prod_id', 'qtd_prod'];
+    protected $fillable = ['pedi_id','prod_id', 'qtd_prod', 'desc_prod'];
 
     public function produto()
     {

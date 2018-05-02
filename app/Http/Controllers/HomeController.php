@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {
@@ -26,7 +27,6 @@ class HomeController extends Controller
     {
         $result = DB::table("produtos")->select(DB::raw("count(nome) as total"))->get();
         $total = $result[0]->total;
-
         return view('home', compact('total'));
     }
 }

@@ -8,6 +8,7 @@ use App\Cliente;
 use App\Produto;
 use App\Pedido;
 use App\Ordem_Pedido;
+use App\Estoque;
 
 class PedidoController extends Controller
 {
@@ -33,19 +34,37 @@ class PedidoController extends Controller
                 'pedi_id' => $id_ped,
                 'prod_id' => $prod,
                 'qtd_prod' => $request->qtd[$key],
+                'desc_prod' => $request->desc[$key],
             ]);   
         }
  
     }
     
+    public function updateestoque(Request $request, $id_ped){
+                
+        foreach($request->produto as $key => $prod){
+            $produto = Produto::find($prod);
+            
+            
+            Ordem_Pedido::create([
+                'pedi_id' => $id_ped,
+                'prod_id' => $prod,
+                'qtd_prod' => $request->qtd[$key],
+                'desc_prod' => $request->desc[$key],
+            ]);   
+        }
+ 
+    }
     
     public function store(Request $request){
         
         
         $this->validate($request, [
             'cliente' => 'required',
-            'descricao' => 'required',
             'preco' => 'required',
+            'data_ini' => 'required',
+            'data_fim' => 'nullable',
+            'status' => 'required',
         ]);
       
         
@@ -53,6 +72,9 @@ class PedidoController extends Controller
             'clie_id' => $request->cliente,
             'obs' => $request->descricao,
             'val_tot' => $request->preco,
+            'data_ini' => $request->data_ini,
+            'data_fim' => $request->data_fim,
+            'status' => $request->status,
         ]);
             
         PedidoController::saveprodutos($request, $pedido);
@@ -62,4 +84,25 @@ class PedidoController extends Controller
         return back();
 
     }
+    
+    
+    public function details(Request $request, $id){
+        $produtos = DB::table('ordem_pedido')
+                ->join('pedidos', 'ordem_pedido.pedi_id', '=', 'pedidos.id')
+                ->where('pedidos.id', '=', $id)
+                ->join('produtos', 'ordem_pedido.prod_id', '=', 'produtos.id')
+                ->select('produtos.nome', 'ordem_pedido.desc_prod', 'produtos.preco', 'ordem_pedido.qtd_prod')
+                ->get();
+        $pedido = Pedido::find($id);  
+        
+        if(isset($produtos)) {
+            return view('pedidos.details', compact('pedido','produtos'));
+        } else {
+            \Session::flash('message', 'Nenhum produto econtrado!');
+            \Session::flash('alert-class', 'bg-danger');
+            return back();
+        }
+    } 
+    
+    
 }

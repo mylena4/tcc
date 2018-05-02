@@ -17,7 +17,10 @@ class CreatePedidosTable extends Migration
             $table->increments('id');
             $table->integer('clie_id')->unsigned();
             $table->float('val_tot');
-            $table->string('obs');
+            $table->date('data_ini');
+            $table->date('data_fim')->nullable();
+            $table->string('obs')->nullable();
+            $table->tinyInteger('status');
             $table->foreign('clie_id')->references('id')->on('clientes');
             $table->timestamps();
         });

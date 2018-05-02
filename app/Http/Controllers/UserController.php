@@ -95,6 +95,17 @@ class UserController extends Controller{
 
     }
 
-
+    public function search(Request $request, $find = null) {
+        $find = ($find == null) ? $request->find : $find;    
+        $usuarios = User::where('name','like','%'.$find.'%')->orWhere('email','like',$find.'%')->get();            
+        if($usuarios->count() >= 1) {
+            return view('users.index', compact('usuarios'));
+        } else {
+            $usuarios = User::all();
+            \Session::flash('message', 'Nenhum usuário encontrado!');
+            \Session::flash('alert-class', 'bg-danger');
+            return view('users.index', compact('usuarios'));
+        }
+    }
 
 }
