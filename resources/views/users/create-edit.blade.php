@@ -53,19 +53,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Perfil</label>
-
-                            <div class="col-md-6">
-                                <select name="perfil" class="form-control" required>
-                                    <option value="0">Selecione um perfil</option>
-                                    <option value="1" @if(isset($usuario) && $usuario->perfil == 1 ) selected="selected" @endif>Administração</option>
-                                    <option value="2" @if(isset($usuario) && $usuario->perfil == 2 ) selected="selected" @endif>Vendas</option>
-                                    <option value="3" @if(isset($usuario) && $usuario->perfil == 3 ) selected="selected" @endif>Financeiro</option>
-                                </select>
-                            </div>
-                        </div>
-
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

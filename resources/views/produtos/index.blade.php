@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="panel-heading"><h2>Produtos</h2></div>
+    <div class="panel-heading "><h2>Produtos</h2></div>
     <div class="panel-body">
         {{--<form method="get" class="form-group" action="/consulta/prod">--}}
         {{--<div class="col-md-4">--}}

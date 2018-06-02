@@ -20,31 +20,29 @@ class UserController extends Controller{
 
     public function store(Request $request){
 
-            if(Auth::user()->perfil == 1) {
                 $this->validate($request, [
                     'name' => 'required|min:5',
                     'email' => 'required|min:7|unique:users,email',
                     'password' => 'required|min:6',
-                    'perfil' => 'required',
                 ]);
 
                 User::create([
                     'name' => $request->name,
                     'email' => $request->email,
                     'password' => bcrypt($request->password),
-                    'perfil' => $request->perfil,
                     'status' => 1,
                 ]);
 
+      
                 \Session::flash('message', 'Usuário cadastrado com sucesso!');
                 \Session::flash('alert-class', 'bg-success');
                 return back();
 
-            } else {
-                \Session::flash('message', 'Falha ao cadastrar usuário!');
-                \Session::flash('alert-class', 'bg-danger');
-                return back();
-            }
+//            } else {
+//                \Session::flash('message', 'Falha ao cadastrar usuário!');
+//                \Session::flash('alert-class', 'bg-danger');
+//                return back();
+//            }
     }
 
 
@@ -58,7 +56,6 @@ class UserController extends Controller{
         $usuario->name = $request->name;
         $usuario->email = $request->email;
         $usuario->password = $request->password == '' ? $usuario->password : bcrypt($request->password);
-        $usuario->perfil = $request->perfil;
         $usuario->status = !isset($request->status) ? $usuario->status : $request->status;
 
         if($usuario->save()) {

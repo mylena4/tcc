@@ -75,8 +75,6 @@ class ProdutoController extends Controller {
                 ->select('materiais.id')
                 ->get();
         
-        //dd($prod_mate->id);
-        
         return view('produtos.create-edit', compact('materiais', 'prod_mate','produto'));
         
         

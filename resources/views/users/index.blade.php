@@ -19,7 +19,6 @@
             <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
-            <th>Função</th>
             <th>Status</th>
             </thead>
             <tbody>
@@ -28,11 +27,6 @@
                     <td>{{$usuario->id}}</td>
                     <td>{{ $usuario->name }}</td>
                     <td>{{ $usuario->email }}</td>
-                    <td>
-                        @if($usuario->perfil == 1)  Administração @endif
-                        @if($usuario->perfil == 2)  Vendas @endif
-                        @if($usuario->perfil == 3)  Financeiro @endif
-                    </td>
                     <td>{{ $usuario->status == 1 ? "Ativado" : "Desativado"}} </td>
                     <td><a href="editar/{{$usuario->id}}"class="btn btn-primary pull-right">Editar</a></td>
                     <td>

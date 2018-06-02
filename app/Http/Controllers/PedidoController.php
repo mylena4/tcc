@@ -37,23 +37,32 @@ class PedidoController extends Controller
                 'desc_prod' => $request->desc[$key],
             ]);   
         }
- 
     }
     
-    public function updateestoque(Request $request, $id_ped){
+    public function updateestoque(Request $request){
                 
         foreach($request->produto as $key => $prod){
             $produto = Produto::find($prod);
+            $materiais = DB::table('produto_material')
+                ->join('produtos', 'produto_material.prod_id', '=', 'produtos.id')
+                ->where('produtos.id', '=', $prod)
+                ->join('materiais', 'produto_material.mate_id', '=','materiais.id')
+                ->select( 'materiais.id', 'produto_material.qtd_mate', 'materiais.nome')
+                ->get();
             
-            
-            Ordem_Pedido::create([
-                'pedi_id' => $id_ped,
-                'prod_id' => $prod,
-                'qtd_prod' => $request->qtd[$key],
-                'desc_prod' => $request->desc[$key],
-            ]);   
+            foreach($materiais as $material){
+                $mate = Estoque::find($material->id);
+                $novaqtd = $mate->quantidade - ($material->qtd_mate * $request->qtd[$key]);
+                if($novaqtd >= 0){
+                    $mate->quantidade = $novaqtd; 
+                    $mate->save();
+                } else {
+                    \Session::flash('message', 'O material '.$mate->nome.' está em falta!');
+                    \Session::flash('alert-class', 'bg-danger');
+                    return back();
+                }       
+            } 
         }
- 
     }
     
     public function store(Request $request){
@@ -78,10 +87,11 @@ class PedidoController extends Controller
         ]);
             
         PedidoController::saveprodutos($request, $pedido);
+        PedidoController::updateestoque($request);
         
-        \Session::flash('message', 'Pedido cadastrado com sucesso!');
-        \Session::flash('alert-class', 'bg-success');
-        return back();
+      //  \Session::flash('message', 'Pedido cadastrado com sucesso!');
+      //  \Session::flash('alert-class', 'bg-success');
+      //  return back();
 
     }
     
