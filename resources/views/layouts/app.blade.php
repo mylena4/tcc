@@ -50,7 +50,7 @@
 
 
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Gestão') }}
+                    Lia <span>Artes</span> Manuais  <!--<img src="{{ url('img/lia-header.png') }}" class="col-md-2" >-->
                 </a>
                 @if (Auth::guest())
                     <li><a href="{{ route('login') }}">Login</a></li>

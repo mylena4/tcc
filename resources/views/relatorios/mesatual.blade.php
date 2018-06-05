@@ -7,6 +7,9 @@
 				<h1 class="page-header">Pedidos de {{ $mes[date('n')] }}</h1>
 			</div>
 		</div><!--/.row-->
+                
+                <a href="/exportexcel/mesatual" class="btn btn-success pull-right">Excel</a>
+                
 
 <div class="row col-md-offset-2">
     

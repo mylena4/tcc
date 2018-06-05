@@ -41,9 +41,11 @@
 
 
     <div class="row">
+        <img src="{{ url('img/lia-login.png') }}" class="col-xs-5 col-xs-offset-3 col-sm-5 col-sm-offset-3 col-md-offset-5 col-md-2" >
+                
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+           
             <div class="panel panel-default">
-                <img src="../img/lia-login.png" >
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
@@ -82,9 +84,9 @@
                                     Entrar
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password') }}">
+                               <!-- <a class="btn btn-link" href="{{ route('password') }}">
                                     Esqueceu a senha?
-                                </a>
+                                </a>-->
                             </div>
                         </div>
                     </form>

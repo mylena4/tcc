@@ -92,3 +92,5 @@ Route::get('/detalhes/pedi/{id}', 'PedidoController@details');
 Route::get('/excel', 'ExcelController@excel' );
 Route::get('/relatorios', 'RelatorioController@index');
 Route::get('/relatorios/mesatual', 'RelatorioController@mesatual');
+Route::get('/exportexcel/mesatual', 'ExcelController@mesAtual');
+
