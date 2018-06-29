@@ -18,8 +18,8 @@ class CreateOrdemPedidoTable extends Migration
             $table->integer('prod_id')->unsigned();
             $table->integer('qtd_prod')->unsigned();
             $table->string('desc_prod');
-            $table->foreign('prod_id')->references('id')->on('produtos');
-            $table->foreign('pedi_id')->references('id')->on('pedidos');
+            $table->foreign('prod_id')->references('id')->on('produtos')->onDelete('cascade');
+            $table->foreign('pedi_id')->references('id')->on('pedidos')->onDelete('cascade');
             $table->primary(['prod_id', 'pedi_id']);
             $table->timestamps();
         });

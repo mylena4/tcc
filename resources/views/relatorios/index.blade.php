@@ -1,35 +1,43 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+a.white:link {
+    color:  #ffffff;
+}
+
+/* visited link */
+.white:visited {
+    color: #ffffff;
+}
+
+/* mouse over link */
+a.white:hover {
+    color: #ffffff;
+}
+
+/* selected link */
+a.white:active {
+    color: #ffffff;
+}
+ 
+</style>
+
     <div class="panel-heading col-md-offset-2"><h2>Relatórios</div>
 <div class="row col-md-offset-2">
 			
 			
-			<div class="col-md-5">
-				<div class="panel panel-blue">
-                                    <a href="/relatorios/mesatual"><div class="panel-heading dark-overlay">Pedidos do Mês Atual</div></a>
-					<!--<div class="panel-body">
-						<p>Relatório com os dados dos pedidos feitos no mês atual.</p>
-					</div>-->
-				</div>
-			</div><!--/.col-->
-			
-			<div class="col-md-5">
-				<div class="panel panel-teal">
-					<div class="panel-heading dark-overlay">Teal Panel</div>
-				</div>
-			</div><!--/.col-->
-			
-			<div class="col-md-5">
+			<div class="col-md-11">
 				<div class="panel panel-orange">
-					<div class="panel-heading dark-overlay">Orange Panel</div>
-				</div>
-			</div><!--/.col-->
-			
-			<div class="col-md-5">
-				<div class="panel panel-red">
-					<div class="panel-heading dark-overlay">Red Panel</div>
+                                    <a href="/relatorios/mesatual" class="white"><div class="panel-heading dark-overlay">Pedidos do Mês Atual</div></a>
 					
 				</div>
+			</div>
+			
+			<div class="col-md-11">
+				<div class="panel panel-blue">
+					 <a href="/relatorios/ano" class="white"><div class="panel-heading dark-overlay">Pedidos do Ano</div></a>
+				</div>
 			</div><!--/.col-->
+			
 		</div><!--/.row-->	

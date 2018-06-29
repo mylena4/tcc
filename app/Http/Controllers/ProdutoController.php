@@ -60,7 +60,13 @@ class ProdutoController extends Controller {
         
         foreach($request->materiais as $material){
             $material = Estoque::where('id', $material)->first();
-            $material->produto()->sync($id);  
+            $material->produto()->sync($id); 
+            
+            Produto_Material::update([
+                'mate_id' => $material,
+                'prod_id' => $prod_id,
+                'qtd_mate' => $request->qtd[$key],
+            ]); 
         }
     }
     
@@ -133,4 +139,18 @@ class ProdutoController extends Controller {
         return back();
     }
     
+    public function search(Request $request, $find = null) {
+        $find = ($find == null) ? $request->find : $find;    
+        $produtos = Produto::where('nome','like','%'.$find.'%')->orWhere('descricao','like','%'.$find.'%')->get();            
+        if($produtos->count() >= 1) {
+            \Session::flash('message', '');
+            \Session::flash('alert-class', '');
+            return view('produtos.index', compact('produtos'));
+        } else {
+            $clientes = Produto::all();
+            \Session::flash('message', 'Nenhum produto encontrado!');
+            \Session::flash('alert-class', 'bg-danger');
+            return view('produtos.index', compact('produtos'));
+        }
+    }
 }

@@ -46,7 +46,7 @@
                         @foreach($fornecedores as $fornecedor)
                             <option value="{{ $fornecedor->id }}"
                                     @if(isset($material))
-                                    @if($material->id == $material->fornecedor->id)
+                                    @if($fornecedor->id == $material->fornecedor->id)
                                     selected="selected"
                                     @endif
                                     @endif>

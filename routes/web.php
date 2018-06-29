@@ -87,10 +87,13 @@ Route::post('/editar/pedi/{id}', 'PedidoController@edit');
 Route::get('/deletar/pedi/{id}', 'PedidoController@delete');
 Route::get('/consulta/pedi', 'PedidoController@search');
 Route::get('/detalhes/pedi/{id}', 'PedidoController@details');
+Route::get('/pedidos_json', 'PedidoController@pedidosJson');
 
 //Rotas Relatórios
 Route::get('/excel', 'ExcelController@excel' );
 Route::get('/relatorios', 'RelatorioController@index');
 Route::get('/relatorios/mesatual', 'RelatorioController@mesatual');
 Route::get('/exportexcel/mesatual', 'ExcelController@mesAtual');
+Route::get('/relatorios/ano', 'RelatorioController@ano');
+Route::get('/exportexcel/ano', 'ExcelController@ano');
 

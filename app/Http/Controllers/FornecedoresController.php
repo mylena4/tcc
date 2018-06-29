@@ -55,6 +55,8 @@ class FornecedoresController extends Controller
         $find = ($find == null) ? $request->find : $find;    
         $fornecedores = Fornecedor::where('nome','like','%'.$find.'%')->orWhere('cnpj','like',$find.'%')->orWhere('telefone','like',$find.'%')->get();            
         if($fornecedores->count() >= 1) {
+            \Session::flash('message', '');
+            \Session::flash('alert-class', '');
             return view('fornecedores.index', compact('fornecedores'));
         } else {
             $clientes = Fornecedor::all();

@@ -75,6 +75,8 @@ class ClienteController extends Controller
         $find = ($find == null) ? $request->find : $find;    
         $clientes = Cliente::where('nome','like','%'.$find.'%')->orWhere('email','like',$find.'%')->orWhere('telefone','like',$find.'%')->get();            
         if($clientes->count() >= 1) {
+            \Session::flash('message', '');
+            \Session::flash('alert-class', '');
             return view('clientes.index', compact('clientes'));
         } else {
             $clientes = Cliente::all();

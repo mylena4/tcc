@@ -51,8 +51,8 @@ class EstoqueController extends Controller
         $material->nome = $request->nome;
         $material->descricao = $request->descricao;
         $material->preco = $request->preco;
-
         $material->quantidade = $request->quantidade;
+        $material->forn_id = (int) $request->fornecedor;
         if($material->save()) {
             \Session::flash('message', 'Material alterado com sucesso!');
             \Session::flash('alert-class', 'bg-success');
@@ -69,6 +69,8 @@ class EstoqueController extends Controller
         $find = ($find == null) ? $request->find : $find;    
         $materiais = Estoque::where('nome','like','%'.$find.'%')->orWhere('descricao','like',$find.'%')->get();            
         if($materiais->count() >= 1) {
+            \Session::flash('message', '');
+            \Session::flash('alert-class', '');
             return view('materiais.index', compact('materiais'));
         } else {
             $clientes = Estoque::all();

@@ -90,7 +90,7 @@
                      
                     <div class="form-group">
                         <label class="col-md-4 control-label">Materiais: </label> <br>
-                        
+                        <div class="col-md-6">
                         <div class="form-inline">			
 			        <select name="materiais[]" class="col-md-6 form-control" >
                                     <option>Selecione um Material</option>
@@ -109,6 +109,7 @@
                                         
                                     </div>
                         </div> 
+                    </div>
                     </div>
 
 

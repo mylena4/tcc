@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use DateTime;
 
 
 class HomeController extends Controller
@@ -42,6 +43,29 @@ class HomeController extends Controller
                      ->where('status', '=', 3)
                      ->get();
         $concluido = $resultc[0]->concluido;
-        return view('home', compact('total','iniciar','andamento','concluido'));
+        
+        $datas = DB::table('pedidos')
+                    ->whereNotNull('data_fim')
+                    ->get();
+        $totalinter = 0 ;
+        foreach($datas as $data){
+              $ini =   new DateTime($data->data_ini);
+              $fim =  new DateTime($data->data_fim);
+              $intervalo = $ini->diff($fim);
+              $intervalo = date('d');
+              $totalinter = $totalinter + $intervalo;
+        }
+        $tamanho = sizeof($datas);
+        if($tamanho>0){
+        $media = $totalinter / $tamanho;
+        } else {
+            $media = 0;
+        }
+        
+        
+        
+        
+        
+        return view('home', compact('iniciar','andamento','concluido', 'media'));
     }
 }

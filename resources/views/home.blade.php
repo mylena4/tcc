@@ -46,21 +46,23 @@
 				</div>
 			</div>
 		</div><!--/.row-->
+                
+                <div class="row">
+			<div class="col-md-offset-2 col-xs-12 col-md-8 col-lg-4">
+				<div class="panel panel-blue panel-widget ">
+					<div class="row no-padding">
+						<div class="col-sm-2 col-lg-3 widget-left">
+                                                    <div class="large">{{$media}}</div>
+						</div>
+						<div class="col-sm-10 col-lg-9 widget-right">
+							<div class="large">Produtividade Média</div>
+						</div>
+					</div>
+				</div>
+			</div>
+                </div>
+                    
 
 
-<!--
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="panel panel-blue panel-widget ">
-                        <div class="row no-padding">
-                            <div class="col-sm-3 col-lg-5 widget-left">
-                                <svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
-                            </div>
-                            <div class="col-sm-9 col-lg-7 widget-right">
-                                <div class="large">{{$total}}</div>
-                                <div class="text-muted">Produtos</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
 
     </div>

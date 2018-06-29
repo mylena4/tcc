@@ -14,17 +14,17 @@
             
             //++i;
             valor = '<p>'+
-                          '<label class="col-md-4 control-label"></label>'+
+                          '<label class=" control-label"></label>'+
                             '<select name="produto[]" class="form-control" >'+
                                '<option>Selecione um Produto</option>'+
                                 '@foreach($produtos as $produto)'+
-                                    '<option value="{{ $produto->id }}">'+
+                                    '<option id="{{ $produto->preco }}" name="valor" value="{{ $produto->id }}">'+
                                         '{{ $produto->nome }}'+
                                     '</option>'+
                                 '@endforeach'+
                             '</select>'+
-                            '<input type="number" class="form-control" step=1  name="qtd[]" placeholder="Quantidade" size="0" /> '+
-                            '<input type="text" class="form-control"  name="desc[]" placeholder="Descrição" size="10" /> '+
+                            '<input type="number" class="form-control" step=1  name="qtd[]" placeholder="Quantidade" size="0" onblur="calcular()" /> '+
+                            '<input type="text" class="form-control"  name="desc[]" placeholder="Descrição" size="10" onblur="calcular()"/> '+
                             '<a class="btn btn-danger" href="javascript:void(0)" id="remInput">'+	
                                 'Remover'+
                             '</a>'+
@@ -38,9 +38,43 @@
 			        return false;
 			    });
 			});
+                        
+  function calcular(){      
+        var total = 0;
+        var prod = 0;
+        var x = document.getElementsByName("valor");
+        var y = document.getElementsByName("qtd[]");
+        var count = x.length/y.length;
+        
+        console.log(x);
+        console.log(y);
+        console.log(count);
+        
+        for(var i = 0; i < y.length; i++){
+            console.log("dentro do primeiro for");
+            for(var j = 0; j < count; j++){
+                console.log("dentro do segundo for");
+                if(x[j].selected){
+                    console.log("dentro do if dentro do segundo for");
+                    prod =  parseFloat(y[i].value) * parseFloat(x[j].id);
+                    total = total + prod;
+                }
+            }   
+        }
+        /*
+        
+        for(var i = 0; i < x.length; i++) {
+           
+            if(x[i].selected){
+                total = total + parseFloat(x[i].id);
+            }
+        }*/
+        //}
+        
+        document.getElementById("result").value = total;
+  }
+
 </script>
-
-
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -69,25 +103,26 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Produtos: </label>
 			
-			
+			<div class="col-md-8">
 			<div class="form-inline">			
 			        <select name="produto[]" class="col-md-6 form-control" >
-                                    <option>Selecione um Produto</option>
+                                    <option >Selecione um Produto</option>
                                     @foreach($produtos as $produto)
-                                    <option value="{{ $produto->id }}">
+                                    <option id="{{ $produto->preco }}" name="valor" value="{{ $produto->id }}" >
                                         {{ $produto->nome }}
                                     </option>
                                     @endforeach
                                 </select>
-                                    <input type="number" class="form-control " step=1 id="inputeste" name="qtd[]" size="10" placeholder="Quantidade" /> 
-                                    <input type="text" class="form-control"  name="desc[]" placeholder="Descrição" size="10" /> 
+                                    <input type="number" class="form-control " step=1  id="inputeste" name="qtd[]" placeholder="Quantidade"  size="5" onblur="calcular()"/> 
+                                    <input type="text" class="form-control"  name="desc[]" placeholder="Descrição" size="10" onblur="calcular()"  /> 
                             <a class="btn btn-primary" href="javascript:void(0)" id="addInput">
 				Adicionar 
 			</a>
                                     <div  id="dynamicDiv">
                                         
                                     </div>
-                        </div>                        
+                        </div>  
+                        </div>
                     </div>
 
 
@@ -95,7 +130,7 @@
                     <label for="preco" class="col-md-4 control-label">Valor Total: </label>
 
                     <div class="col-md-6">
-                        <input id="descricao" type="number" step="0.1" class="form-control" name="preco" placeholder="" > 
+                        <input id="result" type="text" class="form-control" name="preco" readonly > 
 
                         @if ($errors->has('preco'))
                         <span class="help-block">
@@ -172,6 +207,24 @@
             </form>
             @if(\Session::has('message'))
             <p class="alert {{ Session::get('alert-class') }}">{{ Session::get('message') }}</p>
+            @endif
+            
+            @if(\Session::has('material'))
+            <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Não é possível realizar o pedido.</h5>
+                </div>
+                <div class="modal-body">
+                  <p>{{ Session::get('material') }}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+              </div>
+            </div>
+            </div>
             @endif
         </div>
     </div>

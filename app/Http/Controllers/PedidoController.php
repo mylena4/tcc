@@ -16,6 +16,13 @@ class PedidoController extends Controller
         $this->middleware('auth');
     }
     
+    public function pedidosJson()
+    {
+        $pedidos = Pedido::all();
+        
+        return response()->json($pedidos);
+    }
+    
     public function index(){
         $pedidos = Pedido::all();
         return view('pedidos.index', compact('pedidos'));
@@ -57,12 +64,28 @@ class PedidoController extends Controller
                     $mate->quantidade = $novaqtd; 
                     $mate->save();
                 } else {
-                    \Session::flash('message', 'O material '.$mate->nome.' está em falta!');
-                    \Session::flash('alert-class', 'bg-danger');
+                    \Session::flash('material', 'O material '.$mate->nome.' está em falta!');
                     return back();
-                }       
+                }      
             } 
         }
+        if($novaqtd >= 0){
+            PedidoController::insert($request);
+        }
+    }
+    
+    public function insert($request) {
+        
+        $pedido = DB::table('pedidos')->insertGetId([
+            'clie_id' => $request->cliente,
+            'obs' => $request->descricao,
+            'val_tot' => $request->preco,
+            'data_ini' => $request->data_ini,
+            'data_fim' => $request->data_fim,
+            'status' => $request->status,
+        ]);
+        
+        PedidoController::saveprodutos($request, $pedido);
     }
     
     public function store(Request $request){
@@ -74,24 +97,14 @@ class PedidoController extends Controller
             'data_ini' => 'required',
             'data_fim' => 'nullable',
             'status' => 'required',
-        ]);
-      
-        
-        $pedido = DB::table('pedidos')->insertGetId([
-            'clie_id' => $request->cliente,
-            'obs' => $request->descricao,
-            'val_tot' => $request->preco,
-            'data_ini' => $request->data_ini,
-            'data_fim' => $request->data_fim,
-            'status' => $request->status,
-        ]);
-            
-        PedidoController::saveprodutos($request, $pedido);
+        ]);        
+                    
         PedidoController::updateestoque($request);
+
         
-      //  \Session::flash('message', 'Pedido cadastrado com sucesso!');
-      //  \Session::flash('alert-class', 'bg-success');
-      //  return back();
+        \Session::flash('message', 'Pedido cadastrado com sucesso!');
+        \Session::flash('alert-class', 'bg-success');
+        return back();
 
     }
     
@@ -108,11 +121,23 @@ class PedidoController extends Controller
         if(isset($produtos)) {
             return view('pedidos.details', compact('pedido','produtos'));
         } else {
-            \Session::flash('message', 'Nenhum produto econtrado!');
+            \Session::flash('message', 'Nenhum produto encontrado!');
             \Session::flash('alert-class', 'bg-danger');
+            
             return back();
         }
     } 
     
+    public function delete(Request $request, $id) {
+        $pedido = Pedido::find($id);
+        $pedido->delete();
+
+            \Session::flash('message', 'Pedido deletado com sucesso!');
+            \Session::flash('alert-class', 'bg-success');
+
+        return back();
+    }
+    
+
     
 }

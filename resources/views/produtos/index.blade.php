@@ -2,24 +2,31 @@
 
 @section('content')
     <div class="panel-heading "><h2>Produtos</h2></div>
-    <div class="panel-body">
-        {{--<form method="get" class="form-group" action="/consulta/prod">--}}
-        {{--<div class="col-md-4">--}}
-        {{--<input name="find" class="form-control" placeholder="Buscar produto...">--}}
-        {{--</div>--}}
-        {{--<input class="btn btn-primary" type="submit" value="Buscar">--}}
-        {{--</form>--}}
 
-        <table class="table">
+    <div class="col-md-12">
+        <form method="get" class="form-inline" action="/consulta/prod">
+        <input name="find" class="form-control"  placeholder="Nome ou descrição...">
+        <input class="btn btn-primary" type="submit" value="Buscar">
+        </form> 
+        <br>
+    </div>
+    
+    <div class="panel-body">
+        <table data-toggle="table" data-url="data1.json"  data-show-refresh="false" data-show-toggle="false" data-show-columns="false" data-search="false" data-select-item-name="toolbar1" data-pagination="false" data-sort-name="name" data-sort-order="desc">
             <thead>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Preço</th>
+            <th  data-checkbox="false"></th>
+            <th  data-sortable="true">ID</th>
+            <th  data-sortable="true">Nome</th>
+            <th  data-sortable="true">Descrição</th>
+            <th  data-sortable="true">Preço</th>
+            <th></th>
+            <th></th>
+            <th></th>
             </thead>
             <tbody>
             @foreach($produtos as $produto)
                 <tr>
+                    <td></td>
                     <td>{{ $produto->id }}</td>
                     <td>{{ $produto->nome }}</td>
                     <td>{{ $produto->descricao }}</td>
@@ -40,3 +47,11 @@
         @endif
     </div>
 @endsection
+
+
+        <script src="{{ asset('js/jquery-1.11.1.min.js') }}"></script>
+	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('js/chart.min.js') }}"></script>
+	<script src="{{ asset('js/easypiechart.js') }}"></script>
+	<script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+	<script src="{{ asset('js/bootstrap-table.js') }}"></script>
